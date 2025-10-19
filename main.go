@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -38,6 +39,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error: OpenAPI specification file not found: %s\n", specFile)
 		os.Exit(1)
 	}
+
 	// Create nontest
 	nt := nontest.New()
 
@@ -51,10 +53,50 @@ func main() {
 		httpstub.BaseURL(baseURL),
 	)
 	nt.Cleanup(func() {
-		ts.Close()
+		if ts != nil {
+			ts.Close()
+		}
 	})
 
-	ts.ResponseExample()
+	// If ts implements http.Handler (it does export ServeHTTP in the stack trace),
+	// wrap it with a panic recovery middleware so handler goroutine panics become a 500 response.
+	// Note: if NewServer already started its own net/http server internally, this wrapper may not be used.
+	var handler http.Handler
+
+	// Capture the original handler to avoid recursive closure calls.
+	var orig http.Handler
+	if ts != nil {
+		orig = ts
+	}
+
+	handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if rec := recover(); rec != nil {
+				fmt.Fprintf(os.Stderr, "recovered panic in handler: %v\n", rec)
+				http.Error(w, "internal server error", http.StatusInternalServerError)
+			}
+		}()
+
+		if orig == nil {
+			http.Error(w, "no OpenAPI handler available", http.StatusInternalServerError)
+			return
+		}
+
+		orig.ServeHTTP(w, r)
+	})
+
+	// Start a server using our wrapped handler only if NewServer did not already start one.
+	// If NewServer already started listening, this ListenAndServe will fail with "address already in use".
+	go func() {
+		if err := http.ListenAndServe(addr, handler); err != nil && err != http.ErrServerClosed {
+			fmt.Fprintf(os.Stderr, "server error: %v\n", err)
+		}
+	}()
+
+	// keep ResponseExample behavior if needed
+	if ts != nil {
+		ts.ResponseExample()
+	}
 
 	fmt.Printf("Mock server started at http://%s\n", addr)
 	fmt.Printf("OpenAPI spec: %s\n", specFile)
