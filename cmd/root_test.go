@@ -19,4 +19,3 @@ func TestRun_MissingSpecFile(t *testing.T) {
 	assert.Error(t, err)
 	assert.Equal(t, "OpenAPI specification file is required", err.Error())
 }
-
