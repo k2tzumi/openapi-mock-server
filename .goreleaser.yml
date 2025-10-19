@@ -43,27 +43,26 @@ archives:
 -
   id: openapi-mock-server-archive
   name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format: tar.gz
   format_overrides:
-    - goos: darwin
-      format: zip
+    darwin: zip
   files:
     - LICENSE
     - CREDITS
     - README.md
     - CHANGELOG.md
--
-  id: openapi-mock-server-binary
-  name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  format: binary
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Version }}-next"
+  name_format: "{{ .Version }}-next"
 changelog:
+binaries:
+  - id: openapi-mock-server-binary
+    name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
 nfpms:
   - id: openapi-mock-server-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
-    builds:
+    ids:
       - openapi-mock-server-linux
     homepage: https://github.com/k2tzumi/openapi-mock-server
     maintainer: Katsumi Kato <katzumi+github@gmail.com>
