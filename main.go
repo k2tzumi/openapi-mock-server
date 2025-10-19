@@ -43,19 +43,19 @@ func main() {
 
 	addr := fmt.Sprintf("%s:%d", host, port)
 
-	// Create httpstub router
-	r := httpstub.NewRouter(
+	// Create httpstub server
+	ts := httpstub.NewServer(
 		nt,
 		httpstub.OpenApi3(specFile),
-		// httpstub.Addr(addr),
+		httpstub.Addr(addr),
 		httpstub.BaseURL(baseURL),
 	)
+	nt.Cleanup(func() {
+		ts.Close()
+	})
 
-	s := r.Server()
-
-	// Start the server
-	s.Start()
-
+	ts.ResponseExample()
+	
 	fmt.Printf("Mock server started at http://%s\n", addr)
 	fmt.Printf("OpenAPI spec: %s\n", specFile)
 	fmt.Println("Press Ctrl+C to stop the server")
