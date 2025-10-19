@@ -1,3 +1,4 @@
 testdata/*.pem
 testdata/*.srl
 coverage.out
+openapi-mock-server
