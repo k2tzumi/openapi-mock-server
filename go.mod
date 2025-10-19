@@ -4,7 +4,7 @@ go 1.24.7
 
 require (
 	github.com/k1LoW/httpstub v0.27.1
-	github.com/k1LoW/nontest v0.1.0
+	github.com/k1LoW/nontest v0.1.1
 	github.com/spf13/cobra v1.10.1
 	github.com/stretchr/testify v1.11.1
 )
