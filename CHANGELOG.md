@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.0.5](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.4...v0.0.5) - 2025-10-19
+### Other Changes
+- Add base-path by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/12
+- go get github.com/k1LoW/nontest@v0.1.1 by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/14
+- chore(deps): bump the dependencies group with 2 updates by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/16
+
 ## [v0.0.4](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.3...v0.0.4) - 2025-10-19
 ### Other Changes
 - Fix unmarshal errors by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/9
