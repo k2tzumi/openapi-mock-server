@@ -1,0 +1,80 @@
+version: 2
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+builds:
+-
+  id: gh-do-linux
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - linux
+  goarch:
+    - amd64
+    - arm64
+  main: ./cmd/gh-do/main.go
+  ldflags:
+    - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
+-
+  id: gh-do-darwin
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - darwin
+  goarch:
+    - amd64
+    - arm64
+  main: ./cmd/gh-do/main.go
+  ldflags:
+    - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
+-
+  id: gh-do-windows
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - windows
+  goarch:
+    - amd64
+  main: ./cmd/gh-do/main.go
+  ldflags:
+    - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
+archives:
+-
+  id: gh-do-archive
+  name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format_overrides:
+    - goos: darwin
+      format: zip
+  files:
+    - LICENSE
+    - CREDITS
+    - README.md
+    - CHANGELOG.md
+-
+  id: gh-do-binary
+  name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format: binary
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Version }}-next"
+changelog:
+nfpms:
+  - id: gh-do-nfpms
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
+    builds:
+      - gh-do-linux
+    homepage: https://github.com/k2tzumi/openapi-mock-server
+    maintainer: Katsumi Kato <katzumi+github@gmail.com>
+    description: openapi-mock-server is a command-line tool designed to run a mock API server based on an OpenAPI Specification.
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+    bindir: /usr/bin
+    epoch: 1
+release:
+  draft: true
+  replace_existing_draft: true
