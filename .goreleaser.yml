@@ -5,7 +5,7 @@ before:
     - go mod tidy
 builds:
 -
-  id: gh-do-linux
+  id: openapi-mock-server-linux
   env:
     - CGO_ENABLED=0
   goos:
@@ -13,11 +13,11 @@ builds:
   goarch:
     - amd64
     - arm64
-  main: ./cmd/gh-do/main.go
+  main: ./cmd/openapi-mock-server/main.go
   ldflags:
     - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
 -
-  id: gh-do-darwin
+  id: openapi-mock-server-darwin
   env:
     - CGO_ENABLED=0
   goos:
@@ -25,46 +25,45 @@ builds:
   goarch:
     - amd64
     - arm64
-  main: ./cmd/gh-do/main.go
+  main: ./cmd/openapi-mock-server/main.go
   ldflags:
     - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
 -
-  id: gh-do-windows
+  id: openapi-mock-server-windows
   env:
     - CGO_ENABLED=0
   goos:
     - windows
   goarch:
     - amd64
-  main: ./cmd/gh-do/main.go
+  main: ./cmd/openapi-mock-server/main.go
   ldflags:
     - -s -w -X github.com/k2tzumi/openapi-mock-server.version={{.Version}} -X github.com/k2tzumi/openapi-mock-server.commit={{.FullCommit}} -X github.com/k2tzumi/openapi-mock-server.date={{.Date}} -X github.com/k2tzumi/openapi-mock-server/version.Version={{.Version}}
 archives:
 -
-  id: gh-do-archive
+  id: openapi-mock-server-archive
   name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format: tar.gz
   format_overrides:
-    - goos: darwin
-      format: zip
+    darwin: zip
   files:
     - LICENSE
     - CREDITS
     - README.md
     - CHANGELOG.md
--
-  id: gh-do-binary
-  name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  format: binary
 checksum:
   name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Version }}-next"
+  name_format: "{{ .Version }}-next"
 changelog:
+binaries:
+  - id: openapi-mock-server-binary
+    name_template: '{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
 nfpms:
-  - id: gh-do-nfpms
+  - id: openapi-mock-server-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
-    builds:
-      - gh-do-linux
+    ids:
+      - openapi-mock-server-linux
     homepage: https://github.com/k2tzumi/openapi-mock-server
     maintainer: Katsumi Kato <katzumi+github@gmail.com>
     description: openapi-mock-server is a command-line tool designed to run a mock API server based on an OpenAPI Specification.
