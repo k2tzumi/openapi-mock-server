@@ -15,8 +15,8 @@ func main() {
 	var (
 		specFile string
 		host     string
-		port	 int
-		baseURL     string
+		port     int
+		baseURL  string
 	)
 
 	flag.StringVar(&specFile, "spec", "", "Path to OpenAPI specification file (required)")
@@ -55,7 +55,7 @@ func main() {
 	})
 
 	ts.ResponseExample()
-	
+
 	fmt.Printf("Mock server started at http://%s\n", addr)
 	fmt.Printf("OpenAPI spec: %s\n", specFile)
 	fmt.Println("Press Ctrl+C to stop the server")
