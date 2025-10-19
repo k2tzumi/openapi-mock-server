@@ -15,6 +15,8 @@ github.com/k1LoW/httpstub v0.27.1 h1:TYvOVqz1JULiu19A5uQ3eBaeAFcWg4ZBzHTFRS1h0FY
 github.com/k1LoW/httpstub v0.27.1/go.mod h1:f9lfEPKr//BLqN31m2AB9duJwJ0Hsdgv9+f4x6y/5Lo=
 github.com/k1LoW/nontest v0.1.0 h1:+mT8ahi9u5UCAO5fdXmonQdsmk3vi5TXxF3sMbXsrwE=
 github.com/k1LoW/nontest v0.1.0/go.mod h1:KMAfNIG+eQrmeDw98F/3WtYtQUWjbTAFVdefGvZSXVc=
+github.com/k1LoW/nontest v0.1.1 h1:6XlfFb/UARMvFYDj/d7sesytyzy3NS/rjUmoDfjlVRk=
+github.com/k1LoW/nontest v0.1.1/go.mod h1:wgyvDO6F5wuopau9w+jVFHDsYHUJ4b8RyqzG0749ULc=
 github.com/pb33f/jsonpath v0.1.2 h1:PlqXjEyecMqoYJupLxYeClCGWEpAFnh4pmzgspbXDPI=
 github.com/pb33f/jsonpath v0.1.2/go.mod h1:TtKnUnfqZm48q7a56DxB3WtL3ipkVtukMKGKxaR/uXU=
 github.com/pb33f/libopenapi v0.28.0 h1:j8o3Tttxo1AvX/QknIVXvmF1ixiR8Bl93FOgB+OQPt0=
