@@ -11,6 +11,8 @@ github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/k1LoW/httpstub v0.26.0 h1:vfZ0XukhhKZWjT+aB2pkDRxCeEni1gVQOXVA0yuV4hI=
 github.com/k1LoW/httpstub v0.26.0/go.mod h1:f9lfEPKr//BLqN31m2AB9duJwJ0Hsdgv9+f4x6y/5Lo=
+github.com/k1LoW/httpstub v0.27.1 h1:TYvOVqz1JULiu19A5uQ3eBaeAFcWg4ZBzHTFRS1h0FY=
+github.com/k1LoW/httpstub v0.27.1/go.mod h1:f9lfEPKr//BLqN31m2AB9duJwJ0Hsdgv9+f4x6y/5Lo=
 github.com/k1LoW/nontest v0.1.0 h1:+mT8ahi9u5UCAO5fdXmonQdsmk3vi5TXxF3sMbXsrwE=
 github.com/k1LoW/nontest v0.1.0/go.mod h1:KMAfNIG+eQrmeDw98F/3WtYtQUWjbTAFVdefGvZSXVc=
 github.com/pb33f/jsonpath v0.1.2 h1:PlqXjEyecMqoYJupLxYeClCGWEpAFnh4pmzgspbXDPI=

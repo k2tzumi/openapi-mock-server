@@ -12,10 +12,21 @@ func TestRun_MissingSpecFile(t *testing.T) {
 		specFile: "",
 		host:     "localhost",
 		port:     8080,
-		baseURL:  "/",
+		basePath:  "/",
 	}
 	t.Context()
-	err := Run(context.Background(), opts)
+	_, err := RunServer(context.Background(), opts)
 	assert.Error(t, err)
 	assert.Equal(t, "OpenAPI specification file is required", err.Error())
+}
+
+func TestRun_EmptyBasePath(t *testing.T) {
+	opts := &rootOptions{
+		specFile: "../testdata/petstore.yaml",
+		host:     "localhost",
+		port:     8080,
+		basePath:  "",
+	}
+	_, err := RunServer(context.Background(), opts)
+	assert.NoError(t, err)
 }
