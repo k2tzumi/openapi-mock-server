@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/k1LoW/httpstub"
 	"github.com/k1LoW/nontest"
@@ -90,10 +92,19 @@ func main() {
 		orig.ServeHTTP(w, r)
 	})
 
-	// Start a server using our wrapped handler only if NewServer did not already start one.
-	// If NewServer already started listening, this ListenAndServe will fail with "address already in use".
+	// Create an http.Server with timeouts to satisfy gosec G114
+	server := &http.Server{
+		Addr:         addr,
+		Handler:      handler,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  120 * time.Second,
+	}
+
+	// Start the server in a goroutine.
+	// If NewServer already started listening at addr, this will likely fail with "address already in use".
 	go func() {
-		if err := http.ListenAndServe(addr, handler); err != nil && err != http.ErrServerClosed {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fmt.Fprintf(os.Stderr, "server error: %v\n", err)
 		}
 	}()
@@ -113,4 +124,13 @@ func main() {
 
 	<-sigCh
 	fmt.Println("\nShutting down server...")
+
+	// Graceful shutdown with timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := server.Shutdown(ctx); err != nil {
+		fmt.Fprintf(os.Stderr, "graceful shutdown failed: %v\n", err)
+		// Force close if graceful shutdown failed
+		_ = server.Close()
+	}
 }

@@ -1,41 +1,48 @@
-.PHONY: build run clean test deps
+export GO111MODULE=on
 
-# Binary name
-BINARY_NAME=openapi-mock-server
+default: test
 
-# Build the binary
-build:
-	go build -o $(BINARY_NAME) main.go
+ci: depsdev test
 
-# Install dependencies
-deps:
-	go mod download
+test: cert
+	go test ./... -coverprofile=coverage.out -covermode=count
+
+lint:
+	golangci-lint run ./...
+
+cert:
+	mkdir -p testdata
+	# server
+	rm -f testdata/*.pem testdata/*.srl
+	openssl req -x509 -newkey rsa:4096 -days 365 -nodes -sha256 -keyout testdata/cakey.pem -out testdata/cacert.pem -subj "/C=UK/ST=Test State/L=Test Location/O=Test Org/OU=Test Unit/CN=*.example.com/emailAddress=k1lowxb@gmail.com"
+	openssl req -newkey rsa:4096 -nodes -keyout testdata/key.pem -out testdata/csr.pem -subj "/C=JP/ST=Test State/L=Test Location/O=Test Org/OU=Test Unit/CN=*.example.com/emailAddress=k1lowxb@gmail.com"
+	openssl x509 -req -sha256 -in testdata/csr.pem -days 60 -CA testdata/cacert.pem -CAkey testdata/cakey.pem -CAcreateserial -out testdata/cert.pem
+	openssl verify -CAfile testdata/cacert.pem testdata/cert.pem
+	# client
+	openssl req -x509 -newkey rsa:4096 -days 365 -nodes -sha256 -keyout testdata/clientcakey.pem -out testdata/clientcacert.pem -subj "/C=UK/ST=Test State/L=Test Location/O=Test Org/OU=Test Unit/CN=client/emailAddress=k1lowxb@gmail.com"
+	openssl req -newkey rsa:4096 -nodes -keyout testdata/clientkey.pem -out testdata/clientcsr.pem -subj "/C=JP/ST=Test State/L=Test Location/O=Test Org/OU=Test Unit/CN=client/emailAddress=k1lowxb@gmail.com"
+	openssl x509 -req -sha256 -in testdata/clientcsr.pem -days 60 -CA testdata/clientcacert.pem -CAkey testdata/clientcakey.pem -CAcreateserial -out testdata/clientcert.pem
+	openssl verify -CAfile testdata/clientcacert.pem testdata/clientcert.pem
+
+depsdev:
+	go install github.com/Songmu/ghch/cmd/ghch@latest
+	go install github.com/Songmu/gocredits/cmd/gocredits@latest
+	go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+prerelease:
+	git pull origin main --tag
 	go mod tidy
+	ghch -w -N ${VER}
+	gocredits -w .
+	git add CHANGELOG.md CREDITS go.mod go.sum
+	git commit -m'Bump up version number'
+	git tag ${VER}
 
-# Run with example OpenAPI spec
-run: build
-	./$(BINARY_NAME) -spec example-openapi.yaml
+prerelease_for_tagpr: depsdev
+	gocredits . -w
+	git add CHANGELOG.md CREDITS go.mod go.sum
 
-# Run with custom spec
-run-custom: build
-	@if [ -z "$(SPEC)" ]; then \
-		echo "Usage: make run-custom SPEC=your-openapi-spec.yaml"; \
-		exit 1; \
-	fi
-	./$(BINARY_NAME) -spec $(SPEC)
+release:
+	git push origin main --tag
 
-# Clean build artifacts
-clean:
-	rm -f $(BINARY_NAME)
-
-# Test the server with curl examples
-test-server:
-	@echo "Testing GET /users..."
-	curl -X GET http://localhost:8080/users
-	@echo "\n\nTesting GET /users/1..."
-	curl -X GET http://localhost:8080/users/1
-	@echo "\n\nTesting POST /users..."
-	curl -X POST http://localhost:8080/users \
-		-H "Content-Type: application/json" \
-		-d '{"name": "Test User", "email": "test@example.com"}'
-	@echo "\n"
+.PHONY: default test
