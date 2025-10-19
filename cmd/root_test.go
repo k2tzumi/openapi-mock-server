@@ -12,7 +12,7 @@ func TestRun_MissingSpecFile(t *testing.T) {
 		specFile: "",
 		host:     "localhost",
 		port:     8080,
-		basePath:  "/",
+		basePath: "/",
 	}
 	t.Context()
 	_, err := RunServer(context.Background(), opts)
@@ -25,7 +25,7 @@ func TestRun_EmptyBasePath(t *testing.T) {
 		specFile: "../testdata/petstore.yaml",
 		host:     "localhost",
 		port:     8080,
-		basePath:  "",
+		basePath: "",
 	}
 	_, err := RunServer(context.Background(), opts)
 	assert.NoError(t, err)
