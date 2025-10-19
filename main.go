@@ -45,6 +45,11 @@ func main() {
 
 	addr := fmt.Sprintf("%s:%d", host, port)
 
+	// baseURL must start with "/"
+	if baseURL[0] != '/' {
+		baseURL = "/" + baseURL
+	}
+
 	// Create httpstub server
 	ts := httpstub.NewServer(
 		nt,
@@ -98,7 +103,7 @@ func main() {
 		ts.ResponseExample()
 	}
 
-	fmt.Printf("Mock server started at http://%s\n", addr)
+	fmt.Printf("Mock server started at http://%s%s\n", addr, baseURL)
 	fmt.Printf("OpenAPI spec: %s\n", specFile)
 	fmt.Println("Press Ctrl+C to stop the server")
 
