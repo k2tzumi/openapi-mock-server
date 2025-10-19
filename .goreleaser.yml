@@ -43,10 +43,21 @@ archives:
 -
   id: openapi-mock-server-archive
   name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  format: tar.gz
-  format_overrides:
-    - goos: darwin
-      format: zip
+  builds:
+    - openapi-mock-server-linux
+    - openapi-mock-server-darwin
+    - openapi-mock-server-windows
+  files:
+    - LICENSE
+    - CREDITS
+    - README.md
+    - CHANGELOG.md
+-
+  id: openapi-mock-server-archive-darwin
+  name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  builds:
+    - openapi-mock-server-darwin
+  format: zip
   files:
     - LICENSE
     - CREDITS
@@ -61,8 +72,10 @@ changelog:
 nfpms:
   - id: openapi-mock-server-nfpms
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
-    builds:
-      - openapi-mock-server-linux
+    contents:
+      - src: ./dist/openapi-mock-server-linux_linux_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}/openapi-mock-server
+        dst: /usr/bin/openapi-mock-server
+        type: file
     homepage: https://github.com/k2tzumi/openapi-mock-server
     maintainer: Katsumi Kato <katzumi+github@gmail.com>
     description: openapi-mock-server is a command-line tool designed to run a mock API server based on an OpenAPI Specification.
@@ -71,7 +84,6 @@ nfpms:
       - apk
       - deb
       - rpm
-    bindir: /usr/bin
     epoch: 1
 release:
   draft: true
