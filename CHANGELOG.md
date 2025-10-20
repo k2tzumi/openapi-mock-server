@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.0.6](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.5...v0.0.6) - 2025-10-20
+### Other Changes
+- Add version by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/18
+- Set the response for example to a 200-series status code by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/20
+
 ## [v0.0.5](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.4...v0.0.5) - 2025-10-19
 ### Other Changes
 - Add base-path by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/12
