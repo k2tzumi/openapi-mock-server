@@ -11,6 +11,7 @@ import (
 
 	"github.com/k1LoW/httpstub"
 	"github.com/k1LoW/nontest"
+	"github.com/k2tzumi/openapi-mock-server/version"
 	"github.com/spf13/cobra"
 )
 
@@ -24,8 +25,10 @@ type rootOptions struct {
 func NewRootCmd() *cobra.Command {
 	opts := &rootOptions{}
 	cmd := &cobra.Command{
-		Use:   "openapi-mock-server",
-		Short: "Start an OpenAPI-based mock server",
+		Use:     "openapi-mock-server",
+		Short:   "Start an OpenAPI-based mock server",
+		Long:    "Start an OpenAPI-based mock server",
+		Version: version.Version,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// 1. Start the server
 			server, err := RunServer(cmd.Context(), opts)
