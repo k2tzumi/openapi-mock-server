@@ -81,16 +81,11 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 		httpstub.BasePath(basePath),
 	)
 	nt.Cleanup(func() {
-		if ts != nil {
-			ts.Close()
-		}
+		ts.Close()
 	})
 
 	// Wrap handler with panic recovery
-	var orig http.Handler
-	if ts != nil {
-		orig = ts
-	}
+	orig := ts
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if rec := recover(); rec != nil {
@@ -98,10 +93,6 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 				http.Error(w, "internal server error", http.StatusInternalServerError)
 			}
 		}()
-		if orig == nil {
-			http.Error(w, "no OpenAPI handler available", http.StatusInternalServerError)
-			return
-		}
 		orig.ServeHTTP(w, r)
 	})
 
@@ -122,7 +113,8 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 	}()
 
 	if ts != nil {
-		ts.ResponseExample()
+		// successful responses
+		ts.ResponseExample(httpstub.Status("2*"))
 	}
 
 	// Start server (run in the background)
