@@ -4,4 +4,4 @@ package version
 const Name string = "openapi-mock-server"
 
 // Version for this.
-var Version = "0.0.5"
+var Version = "0.0.6"
