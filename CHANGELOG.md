@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.0.7](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.6...v0.0.7) - 2026-01-02
+### Other Changes
+- chore(deps): bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/23
+- chore(deps): bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/24
+- chore(deps): bump github.com/k1LoW/httpstub from 0.27.2 to 0.27.3 in the dependencies group by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/27
+
 ## [v0.0.6](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.5...v0.0.6) - 2025-10-20
 ### Other Changes
 - Add version by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/18
