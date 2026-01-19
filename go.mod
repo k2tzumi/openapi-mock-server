@@ -3,7 +3,7 @@ module github.com/k2tzumi/openapi-mock-server
 go 1.24.11
 
 require (
-	github.com/k1LoW/httpstub v0.27.3
+	github.com/k1LoW/httpstub v0.28.0
 	github.com/k1LoW/nontest v0.1.1
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
@@ -16,6 +16,7 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb // indirect
 	github.com/pb33f/jsonpath v0.1.2 // indirect
 	github.com/pb33f/libopenapi v0.28.2 // indirect
 	github.com/pb33f/libopenapi-validator v0.9.3 // indirect

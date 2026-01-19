@@ -20,12 +20,16 @@ github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/k1LoW/httpstub v0.27.3 h1:kGy9st9qr+mtjl4RwEoCiFB7aYQVhxgRh2/gAo/rcls=
 github.com/k1LoW/httpstub v0.27.3/go.mod h1:KIYJK91r9Ghnc2DinrExR1D3fAI1OSbElxLVqeKVNz4=
+github.com/k1LoW/httpstub v0.28.0 h1:Opnd6sRK29bDlJVNEF9Q2ZCPwHo/ozTy/7Y0pqIq+sQ=
+github.com/k1LoW/httpstub v0.28.0/go.mod h1:603IRst9ByrosrGQD8wOmnq/JSEYNeoGbIjicUcEStI=
 github.com/k1LoW/nontest v0.1.1 h1:6XlfFb/UARMvFYDj/d7sesytyzy3NS/rjUmoDfjlVRk=
 github.com/k1LoW/nontest v0.1.1/go.mod h1:wgyvDO6F5wuopau9w+jVFHDsYHUJ4b8RyqzG0749ULc=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
 github.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=
+github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb h1:w1g9wNDIE/pHSTmAaUhv4TZQuPBS6GV3mMz5hkgziIU=
+github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb/go.mod h1:5ELEyG+X8f+meRWHuqUOewBOhvHkl7M76pdGEansxW4=
 github.com/pb33f/jsonpath v0.1.2 h1:PlqXjEyecMqoYJupLxYeClCGWEpAFnh4pmzgspbXDPI=
 github.com/pb33f/jsonpath v0.1.2/go.mod h1:TtKnUnfqZm48q7a56DxB3WtL3ipkVtukMKGKxaR/uXU=
 github.com/pb33f/libopenapi v0.28.2 h1:AXVCE8DWzytXu0jv0Z+cXVopnO/bXU1oWvgA9qiRWgw=
