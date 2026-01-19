@@ -79,6 +79,7 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 		httpstub.OpenApi3(opts.specFile),
 		httpstub.Addr(addr),
 		httpstub.BasePath(basePath),
+		httpstub.DynamicResponseMode(httpstub.PreferExamples),
 	)
 	nt.Cleanup(func() {
 		ts.Close()
@@ -114,7 +115,7 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 
 	if ts != nil {
 		// successful responses
-		ts.ResponseExample(httpstub.Status("2*"))
+		ts.ResponseDynamic(httpstub.Status("2*"))
 	}
 
 	// Start server (run in the background)
