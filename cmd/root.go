@@ -115,7 +115,7 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 
 	if ts != nil {
 		// successful responses
-		ts.ResponseDynamic(httpstub.Status("2*"))
+		ts.ResponseDynamic(httpstub.Status("200"))
 	}
 
 	// Start server (run in the background)
