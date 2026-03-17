@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.0.8](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.7...v0.0.8) - 2026-03-17
+### Other Changes
+- chore(deps): bump goreleaser/goreleaser-action from 6 to 7 in the dependencies group by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/30
+- chore(deps): bump github.com/k1LoW/httpstub from 0.28.0 to 0.28.1 in the dependencies group by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/31
+- Respond with only HTTP 200 status by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/33
+
 ## [v0.0.7](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.6...v0.0.7) - 2026-01-19
 ### Other Changes
 - chore(deps): bump the dependencies group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/23
