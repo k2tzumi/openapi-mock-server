@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.0.9](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.8...v0.0.9) - 2026-06-14
+
+### Fix bug 🐛
+- refactor(server): streamline server startup process and add test for single start by @k2tzumi in https://github.com/k2tzumi/openapi-mock-server/pull/35
+
 ## [v0.0.8](https://github.com/k2tzumi/openapi-mock-server/compare/v0.0.7...v0.0.8) - 2026-03-17
 ### Other Changes
 - chore(deps): bump goreleaser/goreleaser-action from 6 to 7 in the dependencies group by @dependabot[bot] in https://github.com/k2tzumi/openapi-mock-server/pull/30
