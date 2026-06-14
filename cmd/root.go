@@ -31,7 +31,9 @@ func NewRootCmd() *cobra.Command {
 		Version: version.Version,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// 1. Start the server
-			server, err := RunServer(cmd.Context(), opts)
+			server, err := runServer(cmd.Context(), opts, func(server *http.Server) error {
+				return server.ListenAndServe()
+			})
 			if err != nil {
 				return err
 			}
@@ -53,6 +55,12 @@ func NewRootCmd() *cobra.Command {
 
 // Runs and monitors the server, returning the started server instance and an error channel that notifies when the server stops.
 func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
+	return runServer(ctx, opts, func(server *http.Server) error {
+		return server.ListenAndServe()
+	})
+}
+
+func runServer(ctx context.Context, opts *rootOptions, startFunc func(*http.Server) error) (*http.Server, error) {
 	// Validate spec file
 	if opts.specFile == "" {
 		return nil, fmt.Errorf("OpenAPI specification file is required")
@@ -108,7 +116,7 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 
 	// Start server
 	go func() {
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := startFunc(server); err != nil && err != http.ErrServerClosed {
 			fmt.Fprintf(os.Stderr, "server error: %v\n", err)
 		}
 	}()
@@ -117,15 +125,6 @@ func RunServer(ctx context.Context, opts *rootOptions) (*http.Server, error) {
 		// successful responses
 		ts.ResponseDynamic(httpstub.Status("200"))
 	}
-
-	// Start server (run in the background)
-	serverErrCh := make(chan error, 1) // Channel for notifying server startup errors
-	go func() {
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			serverErrCh <- fmt.Errorf("server error: %w", err)
-		}
-		close(serverErrCh) // Close the channel when the server has completely shut down
-	}()
 
 	fmt.Printf("Mock server started at http://%s%s\n", addr, basePath)
 	fmt.Printf("OpenAPI spec: %s\n", opts.specFile)
